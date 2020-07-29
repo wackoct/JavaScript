@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="uli">
+        <li>aaaaa</li>
+        <li>bbbbb</li>
+        <li>cccc</li>
+        <li>dddd</li>
+    </ul>
+    <script>
+        // 当多个对象需要处理同一个请求时，可以将这些请求交由另一个对象同一处理。
+        window.onload = function () {
+            /*             var aLis = document.getElementsByTagName("li");
+                        for(var i = 0;i < aLis.length;i++){
+                            (function(i){
+                                aLis[i].onclick = function(){
+                                    console.log(i);
+                                }
+                            })(i)
+                        }
+                        // 需要每个li上绑定不同的事件，会造成性能损失和内存占用。
+                        // 新增的li还需要重新绑定事件
+                        var oUl = document.querySelector("ul");
+                        var oLi =document.createElement("li");
+                        oLi.innerHTML = "eeee";
+                        oUl.appendChild(oLi);
+
+                        oLi.onclick = function(){
+                            // xxxxxx
+                        } */
+
+            var oUl = document.querySelector("ul");
+            oUl.onclick = function (e) {
+                var e = e || window.event,
+                    target = e.target || e.srcElement;
+
+                if (target.nodeName.toLowerCase() === "li") {
+                    console.log(target.innerHTML);
+                }
+            }
+
+            var oLi = document.createElement("li");
+            oLi.innerHTML = "eeee";
+            oUl.appendChild(oLi);
+
+        }
+    </script>
+</body>
+
+</html>

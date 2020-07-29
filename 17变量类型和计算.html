@@ -1,0 +1,173 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 值类型和引用类型
+        // 值类型
+        let a = 100
+        let b = a
+        a = 200
+        console.log(b)  // 100
+
+        // 引用类型
+        let a = { age: 20 }
+        let b = a
+        b.age = 21
+        console.log(a.age)  // 21
+
+        // 栈：
+        // key, value  /* 存储变量，从上往下 */
+        // 堆：
+        // key, val  /* 存储对象，从下往上 */
+
+        // 常见值类型
+        let a // undefined
+        let s = "abc"
+        let n = 100
+        let b = true
+        let s = Symbol('s')
+
+        // 常见引用类型
+        let obj = { x: 100 }
+        let arr = ['a', 'b', 'c']
+
+        let n = null // 特殊引用类型，指针指向为空地址
+
+        // 特殊引用类型，但不用于存储数据，所以没有”拷贝、复制函数“这一说
+        function fn() { }
+
+        // typeof运算符
+        // 1、识别所有值类型
+        // 2、识别函数
+        // 3、判断是否是引用类型（不可再细分）
+
+        // 判断所有值类型
+        let a; typeof a //   'undefined'
+        let str = 'abc'; typeof str //   'string'
+        let n = 100; typeof n//   'number'
+        let b = true; typeof b //   'boolean'
+        let s = Symbol('s'); typeof s //   'symbol'
+
+        // 能判断函数
+        typeof console.log //  'function'
+        typeof function () { }  //  'function'
+
+        // 能识别引用类型（不能再继续识别）
+        typeof null  //  'object'
+        typeof ['a', 'b']  //  'object'
+        typeof { x: 100 }  //  'object'
+
+        /*
+        深拷贝
+        注意判断值类型和引用类型
+        注意判断是数组还是对象
+        递归
+        */
+
+        let result = {
+            age: 20,
+            name: 'xxx',
+            address: {
+                city: 'beijing'
+            },
+            arr: ['a', 'b', 'c']
+        }
+        let obj1 = {
+            age: 20,
+            name: 'xxx',
+            address: {
+                city: 'beijing'
+            },
+            arr: ['a', 'b', 'c']
+        }
+
+        // let obj1 = obj
+
+        let obj2 = deepClone(obj1)
+        obj2.address.city = 'shanghai'
+        obj2.arr[0] = 'a1'
+        console.log(obj1.address.city)
+        console.log(obj1.arr[0])
+
+        /*
+        深拷贝
+        @param {object} obj 要拷贝的对象
+        */
+
+        function deepClone(obj = {}) {
+            if (typeof obj !== 'object' || obj == null) {
+                // obj 是null，或者不是对象和数组，直接返回
+                return obj;
+            }
+
+            // 初始化返回结果
+            let result
+            if (obj instanceof Array) {
+                result = [];
+            } else {
+                result = {};
+            }
+
+            for (let key in obj) {
+                // 保证key不是原型的属性
+                if (obj.hasOwnProperty(key)) {
+                    // 递归调用！！！
+                    result[key] = deepClone(obj[key]);
+                }
+            }
+
+            // 返回结果
+            return result;
+        }
+
+        // 变量计算-类型转换
+        // 字符串拼接
+        let a = 100 + 10  // 110
+        let b = 100 + '10'  // '10010'
+        let c = true + '10'  //  'true10'
+        // == 运算符
+        100 == '100'  // true
+        0 == ''  //true
+        0 == false //true
+        false == ''  //true
+        null == undefined  //  true
+
+        // 除了 == null 之外，其他都一律用 ===，例如：
+        let obj = { x: 100 }
+        if (obj.a == null) { }
+        // 相当于：
+        // if(obj.a === null || obj.a === undefined) {}
+
+        // if语句和逻辑运算
+        truly变量: !!a === true的变量
+        falsely变量: !!a === false的变量
+        // 以下是falsely变量。除此之外都是truly变量
+        !!0 === false
+        !!NaN === false
+        !!'' === false
+        !!null === false
+        !!undefined === false
+        !!false === false
+
+        // 逻辑判断
+        console.log(10 && 0)  // 0
+        console.log('' || 'abc')  // 'abc'
+        console.log(!window.abc)  // true
+
+        // 值类型和引用类型的区别
+        let obj1 = { x: 100, y: 200 }
+        let obj2 = obj1
+        let x1 = obj1.x
+        obj2.x = 101
+        x1 = 102
+        console.log(obj1) // {x: 101}
+    </script>
+</body>
+
+</html>

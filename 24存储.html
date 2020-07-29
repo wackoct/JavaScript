@@ -1,0 +1,37 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 知识点
+        // cookie
+        // localStorage 和 sessionStorage
+
+        // cookie
+        // 本身用于浏览器和server通讯
+        // 被“借用”到本地存储来
+        // 可用document.cookie = '...' 来修改
+
+        // cookie的缺点
+        // 存储大小，最大4KB
+        // http请求时需要发送到服务端，增加请求数据量
+        // 只能用document.cookie = '...' 来修改，太过简陋
+
+        // localStorage和sessionStorage
+        // HTML5专门为存储而设计，最大可存5M
+        // API简单易用setItem getItem
+        // 不会随着http请求被发送出去
+
+        // localStorage和sessionStorage的区别
+        // localStorage数据会永久存储，除非代码或手动删除
+        // sessionStorage数据只存在于当前会话，浏览器关闭则清空
+        // 一般用localStorage会更多一些
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 装饰器模式，希望在不改变原对象的基础上，通过对其拓展功能和属性来实现更复杂的逻辑。
+        // 4s店在卖一种车，价格为10万元，如果用户需要在此基础上加装一些配置则需要加钱。比如加热座椅配置需要2万元，电动后视镜需要0.8万元等。
+        function Car() {
+            this.pirce = 10;
+        }
+        Car.prototype = {
+            addHeatSeat = function () {
+                this.hasHeatSeat = true;
+                this.pirce += 2;
+            },
+            addAutoMirror = function () {
+                this.hasAutoMirror = true;
+                this.pirce += 0.8;
+            },
+        }
+
+        var car1 = new Car();
+        console.log(car1.pirce);
+        car1.addHeatSeat();
+        car1.addAutoMirror();
+        console.log(car1.pirce)
+
+        // 装饰器模式的写法
+        function Car() {
+            this.pirce = 10;
+        }
+
+        function carWithHeatSeat(carClass) {
+            carClass.hasHeatSeat = true;
+            carClass.pirce += 2;
+        }
+
+        function carwithAutoMirror(carClass) {
+            carClass.hasAutoMirror = true;
+            carClass.pirce += 0.8;
+        }
+
+        var car2 = new Car();
+        console.log(car2.pirce);
+        carWithHeatSeat(car2);
+        carwithAutoMirror(car2);
+        console.log(car2.pirce)
+    </script>
+</body>
+
+</html>

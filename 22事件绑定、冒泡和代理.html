@@ -1,0 +1,122 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 事件冒泡 -->
+    <div id="div1">
+        <p id="p1">激活</p>
+        <p id="p2">取消</p>
+        <p id="p3">取消</p>
+        <p id="p4">取消</p>
+    </div>
+    <div id="div2">
+        <p id="p5">取消</p>
+        <p id="p6">取消</p>
+    </div>
+
+    <div id="div3">
+        <a href="#">a1</a><br>
+        <a href="#">a2</a><br>
+        <a href="#">a3</a><br>
+        <a href="#">a4</a><br>
+    </div>
+
+    <!-- 事件代理 -->
+    <div id="div1">
+        <a href="#">a1</a>
+        <a href="#">a2</a>
+        <a href="#">a3</a>
+        <a href="#">a4</a>
+    </div>
+    <button>
+        点击增加一个a标签
+    </button>
+    <script>
+        // 通用的事件绑定函数
+        function bindEvent(elem, type, fn) {
+            elem.addEventListener(type, fn)
+        }
+
+        function bindEvent(elem, type, selector, fn) {
+            if (fn == null) {
+                fn = selector
+                selector = null
+            }
+            elem.addEventListener(type, event => {
+                if (selector) {
+                    fn = selector
+                    selector = null
+                }
+                elem.addEventListener(type, event => {
+                    const target = event.target
+                    if (selector) {
+                        // 代理绑定
+                        if (target.matches(selector)) {
+                            fn.call(target, event)
+                        }
+                    } else (
+                        // 普通绑定
+                        fn.call(target, event)
+                    )
+                })
+            })
+        }
+
+        // 普通绑定
+        const btn1 = document.getElementById('btn1')
+        bindEvent(btn1, 'click', function (event) {
+            // console.log(event.target)  // 获取触发的元素
+            event.preventDefault()  // 阻止默认行为
+            // alert('clicked')
+            alert(this.innerHTML)
+        })
+
+        // 代理绑定
+        const div3 = document.getElementById('div3')
+        bindEvent(div3, 'click', function (event) {
+            event.preventDefault()
+            // const target = event.target
+            // if (target.nodeName === 'A') {
+            //     alert(target.innerHTML)
+            // }
+            alert(this.innerHTML)
+        })
+
+        // 事件冒泡
+        const p1 = document.getElementById('p1')
+        const body = document.body
+        bindEvent(p1, 'click', e => {
+            e.stopPropagation() // 注释掉这一行，来体会事件冒泡
+            alert('激活')
+        })
+        bindEvent(body, 'click', e => {
+            alert('取消')
+        })
+
+        // 事件代理
+        const div1 = document.getElementById('div1')
+        div1.addEventListener('click', e => {
+            const target = e.target
+            if (e.nodeName === 'A') {
+                alert(target.innerHTML)
+            }
+        })
+
+        // 事件代理特点：
+        // 代码简洁
+        // 减少浏览器内存占用
+        // 但是，不要占用
+
+        // 描述事件冒泡的流程
+        // 基于DOM树形结构
+        // 事件会顺着触发元素网上冒泡
+        // 应用场景：代理
+    </script>
+</body>
+
+</html>

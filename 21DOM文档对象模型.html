@@ -1,0 +1,151 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 前言
+        // vue和react框架应用广泛，封装了DOM操作
+        // 但DOM操作一直都会前端工程师的基础、必备知识
+        // 只会vue而不懂DOM操作的前端程序员，不会长久
+
+        // DOM节点操作
+        // 获取DOM节点
+        // attribute
+        // property
+
+        // 获取DOM节点
+        const div1 = document.getElementById('div1')  // 元素
+        const divList = document.getElementsByTagName('div')  // 集合
+        console.log(divList.length)
+        console.log(divList[0])
+
+        const containerList = document.getElementsByClassName('.container')
+        // 集合
+        const pList = document.querySelectorAll('p')  //  集合
+
+        // DOM节点的property
+        const pList = document.querySelectorAll('p')
+        const p = pList[0]
+        console.log(p.style.width)   // 获取样式
+        p.style.width = '100px'  // 修改样式
+        console.log(p.className)  // 获取class
+        p.className = 'p1'  // 修改class
+
+        // 获取nodeName和nodeType
+        console.log(p.nodeName)
+        console.log(p.nodeType)
+
+        // attribute
+        p1.setAttribute('data-name', 'imooc')
+        console.log(p1.getAttribute('data-name'))
+        p1.setAttribute('style', 'font-size:50px;')
+        console.log(p1.getAttribute('style'))
+
+        // property和attritube
+        // 1、property：修改对象属性，不会体现到html结构中
+        // 2、attritube：修改html属性，会改变html结构
+        // 3、两者都有可能引起DOM重新渲染
+
+        // DOM结构操作
+        // 新增/插入节点
+        // 获取子元素列表，获取父元素
+        // 删除子元素
+
+        // 新增 / 插入节点
+        const div1 = document.getElementById('div1')
+        // 添加新节点
+        const p1 = document.createElement('p')
+        p1.innerHTML = 'this is p1'
+        div1.appendChild(p1)  // 添加新创建的元素
+        // 移动已有节点。注意是移动！！！
+        const p2 = document.getElementById('p2')
+        div1.appendChild(p2)
+
+        // 获取父元素
+        console.log(p1.parentNode)
+
+        // 获取子元素列表
+        const div1ChildNodes = div1.childNodes
+        console.log(div1.childNodes)
+        const div1ChildNodesP = Array.prototype.slice.call(div1.childNodes).filter(child => {
+            if (child.nodeType === 1) {
+                return true
+            }
+            return false
+        })
+        console.log('divChildNodesP', div1ChildNodesP)
+
+        // 删除节点
+        div1.removeChild(div1ChildNodesP[0])
+
+
+        // DOM性能
+        // DOM操作非常“昂贵”，避免频繁的DOM操作
+        // 对DOM查询做缓存
+        // 将频繁操作改为一次性操作
+
+        // DOM查询做缓存
+        // 不缓存DOM查询结果
+        for (let i = 0; i < document.getElementsByTagName('p').length; i++) {
+            // 每次循环，都会计算length，频繁进行DOM查询
+        }
+
+        // 缓存 DOM 查询结果
+        const pList = document.getElementsByTagName('p')
+        const length = pList.length
+        for (let i = 0; i < length; i++) {
+            // 缓存length，只进行一次DOM查询
+        }
+
+        // 将频繁操作改为一次性操作
+        const listNode = document.getElementById('list')
+
+        // 创建一个文档片段，此时还没有插入到DOM树中
+        const frag = document.createDocumentFragment()
+
+        // 执行插入
+        for (let i = 0; i < 10; i++) {
+            const li = document.createElement('li')
+            li.innerHTML = "List item" + i
+
+            // 先插入文档片段中
+            frag.appendChild(li)
+        }
+
+        // 都完成之后，再统一插入到DOM树中
+        listNode.appendChild(frag)
+
+        // BOM操作
+        // navigator
+        // screen
+        // location
+        // history
+
+        // navigator
+        const ua = navigator.userAgent
+        const isChrome = ua.indexOf('chrome')
+        console.log(isChrome)
+
+        // screen
+        console.log(screen.width)
+        console.log(screen.height)
+
+        // location
+        console.log(location.href)
+        console.log(location.protocol) // 'http:'  'https:'
+        console.log(location.pathname)  // '/learn/199'
+        console.log(location.search)
+        console.log(location.hash)
+
+        //history
+        history.back()
+        history.forward()
+    </script>
+</body>
+
+</html>

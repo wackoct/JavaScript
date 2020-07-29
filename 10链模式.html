@@ -1,0 +1,39 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 链模式是实现链式调用的主要方法，通过在自身方法中返回自身的方式，在一个对象连续多次调用自身方法是可以简化写法。
+        // 这种链式调用在开很多库和框架如jQuery/zepto中频繁的被使用。
+
+        // 简单的链模式
+        var obj = {
+            a: function () {
+                console.log("aaa")
+                return this;
+            },
+            b: function () {
+                console.log("bbb")
+                return this;
+            }
+        }
+
+        // obj.a();
+        // obj.b();
+
+        // obj.a().b();
+        // var a = obj.a();   // undefined
+        // a.b();  // 报错
+
+        obj.a().b();
+
+        // zepto设计思路
+    </script>
+</body>
+
+</html>

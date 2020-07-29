@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <script>
+        // 策略模式是一种相对比较简单的设计模式，主要用在有多种状态或者策略需要进行选择的时候，将所有选择封装在一起，只给外部暴露出必要的接口。
+        // 比如我们看这样一个例子，我们有一个表单，需要验证表单项，如果验证不通过就返回一个提示文案。这里我们就可以使用策略模式的思路进行封装。
+        var formStrategy = (function () {
+            var strategy = {
+                notEmpy: function (value) {
+                    return value.length ? "" : "请填写内容"
+                },
+                isNumber: function (value) {
+                    var reg = /^[0-9]+(\.[0-9]+)?$/;
+                    return reg.test(value) ? "" : "请填写一个数字"
+                },
+                isPhone: function (value) {
+                    // 010-12345678 0022-1234567
+                    var reg = /^\d{3}-\d{8}$|^\d{4}-\d{7}$/;
+                    return reg.test(value) ? "" : "请输入一个正确的电话号码"
+                }
+            }
+
+            return {
+                validate: function (type, value) {
+                    value = value.replace(/^\s+|\s+$/, "");
+                    return strategy[type] ? strategy[type](value) : "没有这个检测方法，请手动添加"
+                },
+                addStrategy: function (type, fn) {
+                    if (strategy[type]) {
+                        return "这个方法已经存在"
+                    } else {
+                        strategy[type] = fn;
+                    }
+                }
+            }
+        })()
+
+        window.onload = function () {
+
+            formStrategy.addStrategy("isEmail", function (value) {
+                var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                return reg.test(value) ? "" : "请输入一个正确的邮箱地址";
+            })
+
+            var oInput = document.querySelector("input");
+            oInput.onchange = function () {
+                var result;
+                result = formStrategy.validate("notEmpty", this.value) ||
+                    // formStrategy.validate("isNumber", this.value) ||
+                    formStrategy.validate("isEmail", this.value) ||
+                    "通过检测";
+                console.log(result);
+            }
+        }
+    </script>
+</body>
+
+</html>
